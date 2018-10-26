@@ -46,6 +46,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
+    <com.qmuiteam.qmui.widget.QMUITabSegment
+        android:id="@+id/tabsegment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"></com.qmuiteam.qmui.widget.QMUITabSegment>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
