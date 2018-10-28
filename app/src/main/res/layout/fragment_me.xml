@@ -1,0 +1,154 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.nxnd.travelnote.fragment.MeFragment">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/me_topbar"
+        android:layout_width="match_parent"
+        app:qmui_topbar_title_color="@color/white"
+        app:qmui_topbar_bg_color="@color/light_blue"
+        android:layout_height="?attr/qmui_topbar_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/qmui_config_color_white"
+        android:orientation="horizontal">
+
+        <com.nxnd.travelnote.custom.CircleImageView
+            android:id="@+id/view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="18dp"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <TextView
+            android:id="@+id/fr_me_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:text="胡川"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+        android:id="@+id/me_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView>
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:text="手机号"-->
+            <!--android:textSize="16sp"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/fr_me_user_phone"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="12dp"-->
+            <!--android:text="18304523113"/>-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#dfdfdf"/>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/fr_me_like_article"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:text="我喜欢的文章"-->
+            <!--/>-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#dfdfdf"/>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/fr_me_feedback"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:text="意见反馈"/>-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#dfdfdf"/>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/fragment_me_about_me"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:text="关于我们"/>-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#dfdfdf"/>-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/fr_me_exit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:text="退出登录"/>-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="#dfdfdf"/>-->
+</LinearLayout>

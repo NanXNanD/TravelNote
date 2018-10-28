@@ -1,59 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity"
-    >
+    android:fitsSystemWindows="true"
+    tools:context=".activity.MainActivity">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="match_parent"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_marginLeft="12dp"
-            android:gravity="center"
-            android:text="蝉-游记"
-            android:textColor="#000"
-            android:textSize="18sp"
-            />
+        <com.qmuiteam.qmui.widget.QMUIViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_background" />
 
-        <ImageView
-            android:id="@+id/user"
-            android:layout_width="56dp"
+        <com.qmuiteam.qmui.widget.QMUITabSegment
+            android:id="@+id/tabsegment"
+            android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:padding="12dp"
-            android:src="@drawable/user"
-            />
-
+            android:layout_alignParentBottom="true"
+            android:background="@color/cardview_light_background"
+            android:paddingBottom="5sp"
+            android:paddingTop="5sp"
+            android:textSize="10sp"
+            app:qmui_tab_icon_position="top"></com.qmuiteam.qmui.widget.QMUITabSegment>
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dfdfdf"
-        />
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-
-    <com.qmuiteam.qmui.widget.QMUITabSegment
-        android:id="@+id/tabsegment"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"></com.qmuiteam.qmui.widget.QMUITabSegment>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 </LinearLayout>
