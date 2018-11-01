@@ -15,6 +15,7 @@ import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.activity.MainActivity;
 import com.nxnd.travelnote.activity.RegisterActivity;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import butterknife.BindView;
@@ -44,14 +45,25 @@ public class MeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_me, container, false);
         ButterKnife.bind(this,view);
+        QMUICommonListItemView itemPhone = listView.createItemView("手机号");
+        itemPhone.setDetailText("11111111111");
+        itemPhone.setImageDrawable(getResources().getDrawable(R.drawable.ic_phone));
+        QMUICommonListItemView itemWorks = listView.createItemView("我的作品");
+        itemWorks.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery));
+        QMUICommonListItemView itemService = listView.createItemView("客服中心");
+        itemService.setImageDrawable(getResources().getDrawable(R.drawable.ic_online_support));
+        QMUICommonListItemView itemAbout = listView.createItemView("关于我们");
+        itemAbout.setImageDrawable(getResources().getDrawable(R.drawable.ic_about));
+        QMUICommonListItemView itemQuit = listView.createItemView("退出登录");
+        itemQuit.setImageDrawable(getResources().getDrawable(R.drawable.ic_left_down2));
+
         QMUIGroupListView.newSection(getContext())
                 .setTitle("")
-                .addItemView(listView.createItemView("item 1"), new View.OnClickListener() {
-                      @Override
-                      public void onClick(View v) {
-                          Toast.makeText(getContext(), "section 1 item 1", Toast.LENGTH_SHORT).show();
-                      }
-                  })
+                .addItemView(itemPhone,null)
+                .addItemView(itemWorks,null)
+                .addItemView(itemService,null)
+                .addItemView(itemAbout,null)
+                .addItemView(itemQuit,null)
                 .setUseDefaultTitleIfNone(false)
                 .setUseTitleViewForSectionSpace(false)
                 .addTo(listView);

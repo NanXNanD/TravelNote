@@ -23,7 +23,6 @@
         <activity android:name="com.nxnd.travelnote.activity.AboutMeActivity"/>
         <activity android:name="com.nxnd.travelnote.activity.LikeArticleActivity"/>
         <activity android:name="com.nxnd.travelnote.activity.FeedBackActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.MeActivity"/>
         <activity android:name="com.nxnd.travelnote.activity.RaidersActivity"/>
     </application>
 
