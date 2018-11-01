@@ -1,5 +1,6 @@
 package com.nxnd.travelnote.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.squareup.okhttp.Request;
@@ -34,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // 沉浸式状态栏
         QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
         //初始化状态栏
@@ -41,13 +44,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initTopBar() {
-        mTopBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+        QMUIAlphaImageButton back = mTopBar.addLeftBackImageButton();
+        back.setColorFilter(Color.BLACK);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
         mTopBar.setTitle("注册账号");
     }
 

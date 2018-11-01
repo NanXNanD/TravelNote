@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         tabsegment = (QMUITabSegment) findViewById(R.id.tabsegment);
         viewPager = (QMUIViewPager) findViewById(R.id.viewpager);
         initviews();

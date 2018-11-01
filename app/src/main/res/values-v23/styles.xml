@@ -1,11 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/white</item>
-        <item name="android:textCursorDrawable">@color/qmui_config_color_black</item>
-        
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
-
 </resources>

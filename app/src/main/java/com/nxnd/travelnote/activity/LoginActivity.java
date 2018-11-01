@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.squareup.okhttp.Request;
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
@@ -26,19 +28,22 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.ac_login_username) EditText userName;
-    @BindView(R.id.ac_login_userpwd) EditText userPwd;
-    @BindView(R.id.ac_login_login) TextView login;
+    @BindView(R.id.login_phone) EditText userName;
+    @BindView(R.id.login_password) EditText userPwd;
+    @BindView(R.id.login_login) ImageButton login;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 沉浸式状态栏
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.ac_login_login)
+    @OnClick(R.id.login_login)
     public void onCLickLogin() {
         if (userName.getText().toString().length() != 11) {
             Toast.makeText(LoginActivity.this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
@@ -117,9 +122,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.ac_login_register)
-    public void onCLickRegister() {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
-    }
+//    @OnClick(R.id.ac_login_register)
+//    public void onCLickRegister() {
+//        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+//        startActivity(intent);
+//    }
 }
