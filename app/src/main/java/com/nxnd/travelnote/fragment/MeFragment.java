@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nxnd.travelnote.R;
+import com.nxnd.travelnote.activity.AboutMeActivity;
 import com.nxnd.travelnote.activity.MainActivity;
 import com.nxnd.travelnote.activity.RegisterActivity;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -22,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by huchuan 我的
+ * Created by Tao Yujia 我的
  */
 public class MeFragment extends Fragment {
 
@@ -53,6 +54,13 @@ public class MeFragment extends Fragment {
         QMUICommonListItemView itemService = listView.createItemView("客服中心");
         itemService.setImageDrawable(getResources().getDrawable(R.drawable.ic_online_support));
         QMUICommonListItemView itemAbout = listView.createItemView("关于我们");
+        itemAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),AboutMeActivity.class);
+                startActivity(intent);
+            }
+        });
         itemAbout.setImageDrawable(getResources().getDrawable(R.drawable.ic_about));
         QMUICommonListItemView itemQuit = listView.createItemView("退出登录");
         itemQuit.setImageDrawable(getResources().getDrawable(R.drawable.ic_left_down2));
