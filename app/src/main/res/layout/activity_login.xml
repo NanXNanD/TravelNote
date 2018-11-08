@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_weight="3">
+        android:layout_weight="3.5">
 
         <ImageView
             android:id="@+id/ac_login_userhead"
@@ -64,6 +64,7 @@
             android:layout_marginBottom="20dp"
             android:text="登录"
             app:qmui_backgroundColor="@color/light_blue"
+            app:qmui_borderColor="@color/light_blue"
             android:textColor="@color/white"
 
 
@@ -74,6 +75,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            app:qmui_borderColor="@color/light_blue"
             android:text="注册"
 
             />

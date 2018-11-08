@@ -43,6 +43,7 @@ public class EditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit, container, false);
+        imageView = view.findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
