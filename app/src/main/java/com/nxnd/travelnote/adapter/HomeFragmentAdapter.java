@@ -1,18 +1,13 @@
 package com.nxnd.travelnote.adapter;
 
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
-import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.fragment.MeFragment;
-import com.nxnd.travelnote.fragment.RaidersFragment;
+import com.nxnd.travelnote.fragment.EditFragment;
 import com.nxnd.travelnote.fragment.TravelNotesFragment;
 
 /**
@@ -20,7 +15,7 @@ import com.nxnd.travelnote.fragment.TravelNotesFragment;
  */
 public class HomeFragmentAdapter extends FragmentPagerAdapter {
 
-    private Fragment[] fragments = {new TravelNotesFragment(), new RaidersFragment() , new MeFragment()};
+    private Fragment[] fragments = {new TravelNotesFragment(), new EditFragment() , new MeFragment()};
     private View view;
     private Context context;
 
