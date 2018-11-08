@@ -26,6 +26,7 @@
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
             android:background="@color/cardview_light_background"
+            android:elevation="20dp"
             android:paddingBottom="5sp"
             android:paddingTop="5sp"
             android:textSize="10sp"

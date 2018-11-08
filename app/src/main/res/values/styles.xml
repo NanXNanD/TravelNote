@@ -5,7 +5,6 @@
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/white</item>
         <item name="android:textCursorDrawable">@color/qmui_config_color_black</item>
-        
+        <item name="colorAccent">@color/light_blue</item>
     </style>
-
 </resources>

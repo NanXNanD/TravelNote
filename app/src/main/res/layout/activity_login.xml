@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_weight="4">
+        android:layout_weight="3">
 
         <ImageView
             android:id="@+id/ac_login_userhead"
@@ -19,95 +19,64 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/ic_app" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="6"
-        android:orientation="vertical"
-        android:layout_height="1px">
+        android:layout_height="1px"
+        android:layout_weight="7"
+        android:orientation="vertical">
 
 
         <EditText
             android:id="@+id/login_phone"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:background="@drawable/qmui_edittext_bg_border_bottom"
             android:drawablePadding="20dp"
             android:drawableStart="@mipmap/ic_me"
             android:hint="手机号"
             android:inputType="phone"
-            android:maxLength="11"
-            android:paddingBottom="20dp" />
+            android:maxLength="11" />
 
 
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:drawablePadding="20dp"
-        android:drawableStart="@mipmap/ic_password"
-        android:hint="密码"
-        android:inputType="textPassword"
-        android:maxLength="16"
-        android:paddingBottom="20dp"/>
-
-        <ImageButton
-            android:id="@+id/login_login"
+        <EditText
+            android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginBottom="40dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:background="@drawable/bg_login_btn"
-            android:src="@drawable/ic_right"
+            android:background="@drawable/qmui_edittext_bg_border_bottom"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/ic_password"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:maxLength="16" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/login_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="20dp"
+            android:text="登录"
+            app:qmui_backgroundColor="@color/light_blue"
+            android:textColor="@color/white"
+
+
+        />
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/login_reg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="注册"
+
             />
-        <!--<com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_marginLeft="40dp"-->
-            <!--android:layout_marginRight="40dp"-->
-            <!--app:qmui_backgroundColor="@color/light_blue"-->
-            <!--app:qmui_borderColor="@color/light_blue"-->
-
-            <!--app:qmui_radius="6dp">-->
-
-        <!--</com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton>-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:orientation="horizontal">-->
-
-
-        <!--<TextView-->
-            <!--android:id="@+id/ac_login_login"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_marginLeft="24dp"-->
-            <!--android:layout_marginRight="24dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="#1fa9ed"-->
-            <!--android:gravity="center"-->
-            <!--android:text="登录"-->
-            <!--android:textColor="#FFFFFF"-->
-            <!--android:textSize="20sp"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/ac_login_register"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_marginLeft="24dp"-->
-            <!--android:layout_marginRight="24dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="#1fa9ed"-->
-            <!--android:gravity="center"-->
-            <!--android:text="注册"-->
-            <!--android:textColor="#FFFFFF"-->
-            <!--android:textSize="20sp"/>-->
-
-
-    <!--</LinearLayout>-->
     </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.nxnd.travelnote">
+    package="com.nxnd.travelnote">
 
     <application
         android:allowBackup="true"
@@ -8,22 +8,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.nxnd.travelnote.activity.MainActivity">
-        </activity>
-        <activity android:name="com.nxnd.travelnote.activity.LoginActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.RegisterActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.StartActivity">
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.StartActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nxnd.travelnote.activity.TravelNotesActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.AboutMeActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.LikeArticleActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.FeedBackActivity"/>
-        <activity android:name="com.nxnd.travelnote.activity.RaidersActivity"/>
+        <activity android:name=".activity.TravelNotesActivity" />
+        <activity android:name=".activity.AboutMeActivity" />
+        <activity android:name=".activity.LikeArticleActivity" />
+        <activity android:name=".activity.RaidersActivity" />
+        <activity android:name=".activity.StepActivity"></activity>
     </application>
 
 </manifest>

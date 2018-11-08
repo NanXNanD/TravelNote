@@ -58,7 +58,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/common_content_spacing"
                     android:paddingRight="@dimen/common_content_spacing"
-                    android:text="账号"
+                    android:text="用户名"
                     android:textColor="?attr/qmui_config_color_gray_1"
                     android:textSize="?attr/qmui_common_list_item_title_h_text_size" />
                 <!--账号输入框-->
