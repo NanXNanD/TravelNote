@@ -21,6 +21,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Tao Yujia 我的
@@ -52,6 +53,15 @@ public class MeFragment extends Fragment {
         QMUICommonListItemView itemWorks = listView.createItemView("我的作品");
         itemWorks.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery));
         QMUICommonListItemView itemService = listView.createItemView("客服中心");
+        itemService.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + "17736102287");
+                intent.setData(data);
+                startActivity(intent);
+            }
+        });
         itemService.setImageDrawable(getResources().getDrawable(R.drawable.ic_online_support));
         QMUICommonListItemView itemAbout = listView.createItemView("关于我们");
         itemAbout.setOnClickListener(new View.OnClickListener() {
