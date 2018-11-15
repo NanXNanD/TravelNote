@@ -42,5 +42,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Button" />
+    <Button
+        android:id="@+id/zxj"
+        android:layout_width="200dp"
+        android:text="zxj"
+        android:layout_height="200dp" />
+    <Button
+        android:id="@+id/bd"
+        android:text="bd"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
 
 </LinearLayout>
