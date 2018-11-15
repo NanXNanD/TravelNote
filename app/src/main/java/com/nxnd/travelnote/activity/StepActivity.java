@@ -1,10 +1,13 @@
 package com.nxnd.travelnote.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.nxnd.travelnote.R;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
@@ -36,8 +39,18 @@ public class StepActivity extends AppCompatActivity {
         initTopBar();
         initTime();
         QMUICommonListItemView itemLocation = listView.createItemView("所在位置");
-        itemLocation.setDetailText("北京");
+//       if(getIntent().getStringExtra("value").equals("1")||getIntent()!=null)//传回定位数据
+//            itemLocation.setDetailText("北京");
+//            itemLocation.setDetailText(getIntent().getStringExtra("snippet")+getIntent().getStringExtra("latlonpoint"));//位置
+
         itemLocation.setImageDrawable(getResources().getDrawable(R.drawable.ic_location));
+        itemLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent( StepActivity.this,LocationActivity.class);
+                startActivity(i);//打开定位页面
+            }
+        });
         QMUICommonListItemView itemTime = listView.createItemView("记录时间");
         itemTime.setDetailText(date);
         itemTime.setImageDrawable(getResources().getDrawable(R.drawable.ic_time));
@@ -75,4 +88,17 @@ public class StepActivity extends AppCompatActivity {
             }
         });
     }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode){
+//            case 200://刚才的识别码
+//                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){//用户同意权限,执行我们的操作
+//                    // startLocaion();//开始定位
+//                }else{//用户拒绝之后,当然我们也可以弹出一个窗口,直接跳转到系统设置页面
+//                    Toast.makeText(MainActivity.this,"未开启定位权限,请手动到设置去开启权限",Toast.LENGTH_LONG).show();
+//                }
+//                break;
+//            default:break;
+//        }
 }

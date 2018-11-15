@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.nxnd.travelnote.R;
+import com.squareup.picasso.Picasso;
 import com.nxnd.travelnote.Url;
 
 import butterknife.BindView;

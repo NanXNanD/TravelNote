@@ -8,7 +8,7 @@
 
 
     <EditText
-        android:id="@+id/eidt_title"
+        android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -21,15 +21,20 @@
         android:layout_gravity="center"
         android:layout_weight="0.05"
         app:srcCompat="@drawable/add" />
-
-    <TextView
+    <Button
+        android:id="@+id/button_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Button" />
+    <EditText
         android:id="@+id/edit_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="地点" />
 
-    <TextView
+    <EditText
         android:id="@+id/edit_longtime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
