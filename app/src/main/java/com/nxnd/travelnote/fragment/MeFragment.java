@@ -15,6 +15,7 @@ import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.activity.AboutMeActivity;
 import com.nxnd.travelnote.activity.MainActivity;
 import com.nxnd.travelnote.activity.RegisterActivity;
+import com.nxnd.travelnote.activity.StepActivity;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -93,7 +94,7 @@ public class MeFragment extends Fragment {
         mTopBar.setTitle("我的");
         mTopBar.addRightImageButton(R.mipmap.ic_setting,R.integer.setting_id).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Intent intent = new Intent(getContext(),RegisterActivity.class);
+                Intent intent = new Intent(getContext(),StepActivity.class);
                 startActivity(intent);
             }
         });

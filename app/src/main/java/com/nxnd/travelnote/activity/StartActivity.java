@@ -24,15 +24,15 @@ public class StartActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
-                String name = pref.getString("userphone", "1");
-                String pwd = pref.getString("userphone", "1");
-//                if (name.equals("1")) {
+                String name = pref.getString("phoneNum", "1");
+                String password = pref.getString("password", "1");
+                if (name.equals("1")) {
                     Intent intent = new Intent(StartActivity.this, LoginActivity.class);
                     startActivity(intent);
-//                } else {
-//                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                }
+                } else {
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
                 finish();
             }
         }, 1000);

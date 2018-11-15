@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qmuiteam.qmui.layout.QMUILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +7,45 @@
     android:orientation="vertical"
     tools:context="com.nxnd.travelnote.activity.StepActivity">
 
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/step_topbar"
+        android:layout_width="match_parent"
+        app:qmui_topbar_title_color="@color/qmui_config_color_black"
+        app:qmui_topbar_bg_color="@color/white"
+        android:layout_height="?attr/qmui_topbar_height" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp">
+
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        android:layout_height="130dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="你的旅游经历..."
+        android:inputType="textMultiLine"
+        android:maxLines="5" />
 
-</com.qmuiteam.qmui.layout.QMUILinearLayout>
+    <ImageButton
+        android:id="@+id/add_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/lightgray"
+        android:padding="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_plus" />
+
+    <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+        android:id="@+id/step_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView>
+
+</LinearLayout>
+</LinearLayout>

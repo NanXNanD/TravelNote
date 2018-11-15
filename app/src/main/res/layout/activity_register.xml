@@ -63,7 +63,7 @@
                     android:textSize="?attr/qmui_common_list_item_title_h_text_size" />
                 <!--账号输入框-->
                 <EditText
-                    android:id="@+id/edittext_name"
+                    android:id="@+id/reg_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill"
@@ -85,7 +85,7 @@
                     android:textSize="?attr/qmui_common_list_item_title_h_text_size" />
                 <!--手机号输入框-->
                 <EditText
-                    android:id="@+id/edittext_phonenumber"
+                    android:id="@+id/reg_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill"
@@ -115,7 +115,7 @@
                     android:orientation="horizontal">
                     <!--验证码输入框-->
                     <EditText
-                        android:id="@+id/edittext_verifycode"
+                        android:id="@+id/reg_verifycode"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
@@ -156,7 +156,7 @@
                     android:textSize="?attr/qmui_common_list_item_title_h_text_size" />
                 <!--密码输入框-->
                 <EditText
-                    android:id="@+id/edittext_password"
+                    android:id="@+id/reg_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="fill"

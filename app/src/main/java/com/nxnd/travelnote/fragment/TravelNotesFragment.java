@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.squareup.okhttp.Request;
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
 import com.nxnd.travelnote.activity.TravelNotesActivity;
@@ -50,55 +49,55 @@ public class TravelNotesFragment extends Fragment {
         linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
+//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
         adapter.refreshList(lists);
 
 
         String url = Url.url + "get_all_travel_notes";
-        OkHttpUtils
-                .get()
-                .url(url)
-                .addParams("null", "null")
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Request request, Exception e) {
-                        Toast.makeText(getActivity(), "获取游记失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(String response) {
-
-                        List<TravelNotesModel> list = new ArrayList<TravelNotesModel>();
-
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                TravelNotesModel travelNotesModel = new TravelNotesModel(
-                                        jsonArray.getJSONObject(i).optString("title"),
-                                        jsonArray.getJSONObject(i).optString("date"),
-                                        jsonArray.getJSONObject(i).optString("background"),
-                                        jsonArray.getJSONObject(i).optString("text1"),
-                                        jsonArray.getJSONObject(i).optString("img1"),
-                                        jsonArray.getJSONObject(i).optString("text2")
-                                );
-
-                                list.add(travelNotesModel);
-
-                            }
-
-                            adapter.refreshList(list);
-                            mList = list;
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                });
-
-
+//        OkHttpUtils
+//                .get()
+//                .url(url)
+//                .addParams("null", "null")
+//                .build()
+//                .execute(new StringCallback() {
+//                    @Override
+//                    public void onError(Request request, Exception e) {
+//                        Toast.makeText(getActivity(), "获取游记失败", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        List<TravelNotesModel> list = new ArrayList<TravelNotesModel>();
+//
+//                        try {
+//                            JSONArray jsonArray = new JSONArray(response);
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                                TravelNotesModel travelNotesModel = new TravelNotesModel(
+//                                        jsonArray.getJSONObject(i).optString("title"),
+//                                        jsonArray.getJSONObject(i).optString("date"),
+//                                        jsonArray.getJSONObject(i).optString("background"),
+//                                        jsonArray.getJSONObject(i).optString("text1"),
+//                                        jsonArray.getJSONObject(i).optString("img1"),
+//                                        jsonArray.getJSONObject(i).optString("text2")
+//                                );
+//
+//                                list.add(travelNotesModel);
+//
+//                            }
+//
+//                            adapter.refreshList(list);
+//                            mList = list;
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//
+//                    }
+//                });
+//
+//
         return view;
     }
 

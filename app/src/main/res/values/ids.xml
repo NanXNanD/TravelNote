@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="setting_id">3001</integer>
+    <integer name="save">4001</integer>
 </resources>

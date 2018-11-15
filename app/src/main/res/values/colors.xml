@@ -5,7 +5,7 @@
     <color name="grey">#333</color>
     <color name="light_blue">#1DACFC</color>
     <!--<color name="light_blue">#32A3E2</color>-->
-
+    <color name="lightgray" >#F2F2F2</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 </resources>

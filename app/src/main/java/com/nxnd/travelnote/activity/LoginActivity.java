@@ -13,15 +13,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.squareup.okhttp.Request;
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.http.HttpMethod;
+import org.xutils.x;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 
 
 /**
@@ -54,91 +61,57 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "用户密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (userName.getText().toString().equals("11111111111")&&userPwd.getText().toString().equals("test")) {
-            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-            SharedPreferences sharedPreferences = getSharedPreferences("user",
-                    Activity.MODE_PRIVATE);
-            //实例化SharedPreferences.Editor对象
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            //用putString的方法保存数据
-            editor.putString("userphone", userName.getText().toString());
-            editor.putString("pwd", userPwd.getText().toString());
-            editor.putString("username", "测试");
-            //提交当前数据
-            editor.apply();
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
-        }
-//rxjava + retrofit2
-//        String url = Url.url + "login";
-//        OkHttpUtils
-//                .get()
-//                .url(url)
-//                .addParams("phone", userName.getText().toString().trim())
-//                .addParams("pwd", userPwd.getText().toString().trim())
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Request request, Exception e) {
-//                        //Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
-//                        String code = "100";
-//                        String name = "test";
-//                        Log.i("lin", "---lin's log--->   name    " + name);
-//                        if (code.equals("100")) {
-//                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-//                            SharedPreferences sharedPreferences = getSharedPreferences("user",
-//                                    Activity.MODE_PRIVATE);
-//                            //实例化SharedPreferences.Editor对象
-//                            SharedPreferences.Editor editor = sharedPreferences.edit();
-//                            //用putString的方法保存数据
-//                            editor.putString("userphone", userName.getText().toString());
-//                            editor.putString("pwd", userPwd.getText().toString());
-//                            editor.putString("username", name);
-//                            //提交当前数据
-//                            editor.apply();
-//
-//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response) {
-////                        String code = response.split(",")[0];
-////                        String name = response.split(",")[1];
-//                        String code = "100";
-//                        String name = "test";
-//                        Log.i("lin", "---lin's log--->   name    " + name);
-//                        if (code.equals("100")) {
-//                            Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-//                            SharedPreferences sharedPreferences = getSharedPreferences("user",
-//                                    Activity.MODE_PRIVATE);
-//                            //实例化SharedPreferences.Editor对象
-//                            SharedPreferences.Editor editor = sharedPreferences.edit();
-//                            //用putString的方法保存数据
-//                            editor.putString("userphone", userName.getText().toString());
-//                            editor.putString("pwd", userPwd.getText().toString());
-//                            editor.putString("username", name);
-//                            //提交当前数据
-//                            editor.apply();
-//
-//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                });
+        loginPost(userName.getText().toString(),userPwd.getText().toString().trim());
+    }
 
+    private void loginPost(String phoneNum,String password){
+        //登录
+        String url = Url.url_login;
+        RequestParams params = new RequestParams(url);
+        params.addParameter("phoneNum",phoneNum);
+        params.addParameter("password",password);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject res = new JSONObject(result);
+                    boolean status = res.getBoolean("status");
+                    String info = res.getString("info");
+                    if (status){
+                        Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+                        //存入用户信息
+                        SharedPreferences sharedPreferences = getSharedPreferences("user", Activity.MODE_PRIVATE);
+                        //实例化SharedPreferences.Editor对象
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //用putString的方法保存数据
+                        editor.putString("phoneNum", userName.getText().toString());
+                        editor.putString("password", userPwd.getText().toString());
+                        //TODO 用户信息
+                        //提交当前数据
+                        editor.apply();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Toast.makeText(LoginActivity.this,info,Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
+            @Override
+            public void onFinished() {
+            }
+        });
     }
 
     @OnClick(R.id.login_reg)
