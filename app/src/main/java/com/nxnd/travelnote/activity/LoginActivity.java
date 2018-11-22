@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.d("loginerr",ex.toString());
                 Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
             }
             @Override

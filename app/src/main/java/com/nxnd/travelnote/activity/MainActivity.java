@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         QMUITabSegment.Tab edit = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(this, R.mipmap.ic_edit),
                 null,
-                "记录", true
+                "日记", true
         );
         QMUITabSegment.Tab me = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(this, R.mipmap.ic_me),

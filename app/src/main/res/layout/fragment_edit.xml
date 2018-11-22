@@ -6,56 +6,107 @@
     android:orientation="vertical"
     android:weightSum="1">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="10">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="4">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_cover" />
 
-    <EditText
-        android:id="@+id/edit_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="请输入标题" />
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="10dp"
+                android:text="修改封面"
+                android:textColor="@color/qmui_config_color_gray_2"
+                android:textSize="14dp"
+                app:qmui_backgroundColor="@color/lightgray"
+                app:qmui_borderColor="@color/lightgray" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0.05"
-        app:srcCompat="@drawable/add" />
-    <Button
-        android:id="@+id/button_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Button" />
-    <EditText
-        android:id="@+id/edit_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="地点" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/black_75"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
 
-    <EditText
-        android:id="@+id/edit_longtime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="时长" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="北信科一日游"
+                    android:id="@+id/title"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018.11.20"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/title"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="6">
+
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Button" />
-    <Button
-        android:id="@+id/zxj"
-        android:layout_width="200dp"
-        android:text="zxj"
-        android:layout_height="200dp" />
-    <Button
-        android:id="@+id/bd"
-        android:text="bd"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@color/lightgray"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="你还没有日记(￣▽￣)"
+            android:textColor="@color/qmui_config_color_gray_3"
+            android:gravity="center"
+            android:textSize="16dp"
+            android:layout_height="wrap_content" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:elevation="6dp"
+            android:padding="10dp"
+            android:text="开始记录"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            app:qmui_backgroundColor="@color/light_blue"
+            app:qmui_borderColor="@color/light_blue" />
+    </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

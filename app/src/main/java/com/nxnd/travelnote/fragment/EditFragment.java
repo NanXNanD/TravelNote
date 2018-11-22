@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.qmuiteam.qmui.widget.QMUIViewPager;
 import com.nxnd.travelnote.R;
 
 /**
- * Created by linSir on 17/3/11.攻略
+ * Created by huchuan
  */
 public class EditFragment extends Fragment {
     private ImageView imageView;
@@ -26,16 +27,16 @@ public class EditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit, container, false);
-        imageView = view.findViewById(R.id.imageView);
-        edit_title = view.findViewById(R.id.edit_title);
-        edit_longtime = view.findViewById(R.id.edit_longtime);
-        edit_location = view.findViewById(R.id.edit_location);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        imageView = view.findViewById(R.id.imageView);
+//        //edit_title = view.findViewById(R.id.edit_title);
+//        edit_longtime = view.findViewById(R.id.edit_longtime);
+//        edit_location = view.findViewById(R.id.edit_location);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
         return view;
     }
 

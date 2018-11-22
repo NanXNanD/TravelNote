@@ -13,7 +13,7 @@ import com.nxnd.travelnote.util.SQLiteDBUtil;
 public class TravelNotesService {
 
     //新增Step
-    public void addStep(Context context, StepModel stepModel){
+    public static void addStep(Context context, StepModel stepModel){
         SQLiteDBUtil db = new SQLiteDBUtil(context);
         SQLiteDatabase sd = db.getWritableDatabase();
         //创建sql语句
@@ -30,5 +30,4 @@ public class TravelNotesService {
     public void updateStep(){
 
     }
-
 }

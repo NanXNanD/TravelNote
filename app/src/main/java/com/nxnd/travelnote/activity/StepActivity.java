@@ -1,26 +1,37 @@
 package com.nxnd.travelnote.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.amap.api.services.core.LatLonPoint;
 import com.nxnd.travelnote.R;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StepActivity extends AppCompatActivity {
 
@@ -28,8 +39,15 @@ public class StepActivity extends AppCompatActivity {
     QMUITopBar mTopBar;
     @BindView(R.id.step_listview)
     QMUIGroupListView listView;
-
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.add_image)
+    ImageButton addImage;
     private String date = "";
+    private List<Uri> mSelected;
+    public static final int REQUEST_CODE_CHOOSE=123;
+    public static final int REQUEST_CODE_LOCATION=234;
+    private QMUICommonListItemView itemLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +56,14 @@ public class StepActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initTopBar();
         initTime();
-        QMUICommonListItemView itemLocation = listView.createItemView("所在位置");
-//       if(getIntent().getStringExtra("value").equals("1")||getIntent()!=null)//传回定位数据
-//            itemLocation.setDetailText("北京");
-//            itemLocation.setDetailText(getIntent().getStringExtra("snippet")+getIntent().getStringExtra("latlonpoint"));//位置
-
+        itemLocation = listView.createItemView("所在位置");
+        itemLocation.setDetailText("北京");
         itemLocation.setImageDrawable(getResources().getDrawable(R.drawable.ic_location));
         itemLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent( StepActivity.this,LocationActivity.class);
-                startActivity(i);//打开定位页面
+                startActivityForResult(i, REQUEST_CODE_LOCATION);//打开定位页面
             }
         });
         QMUICommonListItemView itemTime = listView.createItemView("记录时间");
@@ -88,17 +103,52 @@ public class StepActivity extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode){
-//            case 200://刚才的识别码
-//                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){//用户同意权限,执行我们的操作
-//                    // startLocaion();//开始定位
-//                }else{//用户拒绝之后,当然我们也可以弹出一个窗口,直接跳转到系统设置页面
-//                    Toast.makeText(MainActivity.this,"未开启定位权限,请手动到设置去开启权限",Toast.LENGTH_LONG).show();
-//                }
-//                break;
-//            default:break;
-//        }
+
+    @OnClick(R.id.add_image)
+    public void addImage(){
+        chooseImage();
+    }
+
+    private void chooseImage(){
+        Matisse.from(StepActivity.this)
+                .choose(MimeType.allOf()) // 选择 mime 的类型
+                .maxSelectable(1) // 图片选择的最多数量
+                .theme(R.style.Matisse_Zhihu)
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f) // 缩略图的比例
+                .imageEngine(new GlideEngine()) // 使用的图片加载引擎
+                .forResult(REQUEST_CODE_CHOOSE); // 设置作为标记的请求码
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        Log.i("resultInfo","requestCode"+requestCode+",resultCode"+resultCode);
+        switch (requestCode){
+            case REQUEST_CODE_CHOOSE:
+                if (resultCode == RESULT_OK) {
+                    mSelected = Matisse.obtainResult(data);
+                    Log.d("Matisse", "mSelected: " + mSelected);
+                    imageView.setImageURI(mSelected.get(0));
+                    imageView.setVisibility(View.VISIBLE);
+                    addImage.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case REQUEST_CODE_LOCATION:
+                if (resultCode == RESULT_OK) {
+                    Bundle bundle = data.getExtras();
+                    String cityname = bundle.getString("cityname");
+                    LatLonPoint latlonpoint = (LatLonPoint) bundle.get("latlonpoint");
+                    String snippet = bundle.getString("snippet");
+                    String value = bundle.getString("value");
+                    String title = bundle.getString("title");
+                    String adname = bundle.getString("adname");
+                    itemLocation.setDetailText(title);
+                    Log.d("backFromLocation", cityname+snippet);
+                }
+                break;
+        }
+
+    }
+
 }

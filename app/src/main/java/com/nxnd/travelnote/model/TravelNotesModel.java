@@ -5,20 +5,42 @@ package com.nxnd.travelnote.model;
  */
 public class TravelNotesModel {
 
+    private String noteId;
+    private String userId;
     private String title;
-    private String date;
-    private String background;
-    private String text1;
-    private String img1;
-    private String text2;
+    private String coverUrl;
+    private String startDate;
+    private String location;
+    private String userName;
+    private String userImage;
+    private int viewNum;
 
-    public TravelNotesModel(String title, String date, String background, String text1, String img1, String text2) {
+    public TravelNotesModel(String noteId, String userId, String title, String coverUrl, String startDate, String location, String userName, String userImage, int viewNum) {
+        this.noteId = noteId;
+        this.userId = userId;
         this.title = title;
-        this.date = date;
-        this.background = background;
-        this.text1 = text1;
-        this.img1 = img1;
-        this.text2 = text2;
+        this.coverUrl = coverUrl;
+        this.startDate = startDate;
+        this.location = location;
+        this.userName = userName;
+        this.userImage = userImage;
+        this.viewNum = viewNum;
+    }
+
+    public String getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(String noteId) {
+        this.noteId = noteId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -29,43 +51,51 @@ public class TravelNotesModel {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
-    public String getBackground() {
-        return background;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setBackground(String background) {
-        this.background = background;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public String getText1() {
-        return text1;
+    public String getLocation() {
+        return location;
     }
 
-    public void setText1(String text1) {
-        this.text1 = text1;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getImg1() {
-        return img1;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setImg1(String img1) {
-        this.img1 = img1;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getText2() {
-        return text2;
+    public String getUserImage() {
+        return userImage;
     }
 
-    public void setText2(String text2) {
-        this.text2 = text2;
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
+    public int getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(int viewNum) {
+        this.viewNum = viewNum;
     }
 }

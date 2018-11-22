@@ -1,4 +1,4 @@
-package com.nxnd.travelnote.fragment;
+package com.nxnd.travelnote.custom;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

@@ -26,7 +26,7 @@ public class SQLiteDBUtil extends SQLiteOpenHelper {
                 "imageurl varchar(32)," +
                 "index integer" +
                 "content varchar(500)" +
-                "datetime timestamp" +
+                "datetime varchar(32)" +
                 "location varchar(32)" +
                 "longitude decimal(5,2)" +
                 "latitude decimal(5,2))";

@@ -1,11 +1,10 @@
 package com.nxnd.travelnote.activity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,7 +49,7 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.adapter.SearchResultAdapter;
-import com.nxnd.travelnote.fragment.SegmentedGroup;
+import com.nxnd.travelnote.custom.SegmentedGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -449,14 +448,22 @@ public class LocationActivity extends AppCompatActivity implements LocationSourc
                 searchResultAdapter.setSelectedPosition(position);
                 searchResultAdapter.notifyDataSetChanged();
                 //传递地址信息
-                Intent i = new Intent(LocationActivity.this , StepActivity.class);
+                Intent i=new Intent();
                 //调用putExtra（）来进行数据传输
+                Log.i("cityname" , poiItem.getCityName());
+                Log.i("snippet" , poiItem.getSnippet());
+                Log.i("adname" , poiItem.getAdName());
+                Log.i("title" , poiItem.getTitle());
+
                 i.putExtra("cityname" , poiItem.getCityName());
+                i.putExtra("adname",poiItem.getAdName());
+                i.putExtra("title",poiItem.getTitle());
                 i.putExtra("latlonpoint" , poiItem.getLatLonPoint());
                 i.putExtra("snippet" , poiItem.getSnippet());
                 i.putExtra("value" , "1");
-                //利用Intent对象i来启动mySecondActivity
-                startActivity(i);
+                //返回数据
+                setResult(Activity.RESULT_OK, i);
+                finish();
 
 
             }
@@ -581,6 +588,7 @@ public class LocationActivity extends AppCompatActivity implements LocationSourc
         imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
 
     }
 

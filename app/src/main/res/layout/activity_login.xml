@@ -8,21 +8,35 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:padding="40dp"
         android:layout_weight="3.5">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/login_title"
+            android:text="登录"
+            android:textColor="@color/qmui_config_color_75_pure_black"
+            android:textSize="46dp"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/line"
+            android:layout_below="@id/login_title"
+            android:layout_height="4dp"
+            android:background="@color/light_blue"/>
 
-        <ImageView
-            android:id="@+id/ac_login_userhead"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/ic_app" />
+
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:background="@color/white"
         android:layout_weight="7"
         android:orientation="vertical">
 
@@ -59,26 +73,27 @@
             android:id="@+id/login_login"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="20dp"
+            android:elevation="2dp"
             android:text="登录"
-            app:qmui_backgroundColor="@color/light_blue"
-            app:qmui_borderColor="@color/light_blue"
             android:textColor="@color/white"
+            app:qmui_backgroundColor="@color/light_blue"
 
 
-        />
+            app:qmui_borderColor="@color/light_blue" />
+
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/login_reg"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            app:qmui_borderColor="@color/light_blue"
+            android:elevation="4dp"
             android:text="注册"
 
-            />
+            app:qmui_borderColor="@color/light_blue" />
     </LinearLayout>
 
 </LinearLayout>

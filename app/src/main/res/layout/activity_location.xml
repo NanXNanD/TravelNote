@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
@@ -28,6 +29,7 @@
             android:imeOptions="actionDone"
             android:inputType="text|textAutoComplete"
             android:maxLength="20"
+
             android:paddingRight="37.0dip"
             android:paddingLeft="20.0dip"
             android:singleLine="true"
@@ -52,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="220dp" />
 
-    <com.nxnd.travelnote.fragment.SegmentedGroup
+    <com.nxnd.travelnote.custom.SegmentedGroup
         xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
         android:id="@+id/segmented_group"
         android:layout_width="match_parent"
@@ -95,7 +97,7 @@
             android:layout_weight=".33"
             android:text="商场" />
 
-    </com.nxnd.travelnote.fragment.SegmentedGroup>
+    </com.nxnd.travelnote.custom.SegmentedGroup>
 
 
     <ListView
