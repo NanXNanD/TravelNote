@@ -1,19 +1,14 @@
 package com.nxnd.travelnote.model;
 
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
 /**
- * Created by linSir on 17/3/11.游记model
+ * Created by huchuan on 日记model
  */
 public class TravelNotesModel {
 
-    private String noteId;
-    private String userId;
-    private String title;
-    private String coverUrl;
-    private String startDate;
-    private String location;
-    private String userName;
-    private String userImage;
-    private int viewNum;
+//    日记id
 
     public TravelNotesModel(String noteId, String userId, String title, String coverUrl, String startDate, String location, String userName, String userImage, int viewNum) {
         this.noteId = noteId;
@@ -27,20 +22,44 @@ public class TravelNotesModel {
         this.viewNum = viewNum;
     }
 
-    public String getNoteId() {
-        return noteId;
+    private String noteId;
+
+    //用户id
+    private String userId;
+
+    //标题
+    private String title;
+
+    //封面图片
+    private String coverUrl;
+
+    //开始时间
+    private String startDate;
+
+    //地点
+    private String location;
+
+    //用户名
+    private String userName;
+    //用户头像
+    private String userImage;
+    //阅读数量
+    private int viewNum;
+
+    public TravelNotesModel(String title, String coverUrl) {
+//        this.noteId = noteId;
+        this.title = title;
+        this.coverUrl = coverUrl;
     }
 
-    public void setNoteId(String noteId) {
-        this.noteId = noteId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public TravelNotesModel( String title, String coverUrl, String startDate, String location, String userName, String userImage, int viewNum) {
+        this.title = title;
+        this.coverUrl = coverUrl;
+        this.startDate = startDate;
+        this.location = location;
+        this.userName = userName;
+        this.userImage = userImage;
+        this.viewNum = viewNum;
     }
 
     public String getTitle() {

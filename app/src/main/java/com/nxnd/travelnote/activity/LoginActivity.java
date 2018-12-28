@@ -76,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 try {
                     JSONObject res = new JSONObject(result);
-                    boolean status = res.getBoolean("status");
-                    String info = res.getString("info");
+                    boolean status = res.getBoolean("success");
+                    String info = res.getString("desc");
                     if (status){
                         Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
                         //存入用户信息

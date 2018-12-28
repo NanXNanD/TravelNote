@@ -1,4 +1,4 @@
-package com.nxnd.travelnote.util;
+package com.nxnd.travelnote.helper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

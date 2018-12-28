@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
+import com.nxnd.travelnote.activity.StepActivity;
 import com.nxnd.travelnote.activity.TravelNotesActivity;
 //import com.nxnd.travelnote.adapter.TravelNotesAdapter;
 //import com.nxnd.travelnote.listener.RecyclerItemClickListener;
 import com.nxnd.travelnote.adapter.NoteAdapter;
 import com.nxnd.travelnote.model.TravelNotesModel;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -29,6 +31,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by huchuan 游记
  */
@@ -37,20 +42,24 @@ public class TravelNotesFragment extends Fragment {
     private ListView listView;
     private LinearLayoutManager linearLayoutManager;
     private List<TravelNotesModel> mList;
+    @BindView(R.id.me_topbar)
+    QMUITopBar mTopBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_travel_notes, container, false);
+        ButterKnife.bind(this,view);
+        initTopBar();
         listView = (ListView) view.findViewById(R.id.listview);
         //TODO 测试用
         mList = new ArrayList<TravelNotesModel>();
         mList.add(new TravelNotesModel("123","345","测试标题","https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=85690711,3884201894&fm=26&gp=0.jpg","2018-11-22","中国 北京市","川大宝","https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542865972201&di=74aa9bd230408814fcb346dbe7ef5e37&imgtype=0&src=http%3A%2F%2Fwww.jituwang.com%2Fuploads%2Fallimg%2F151003%2F258203-1510030RP894.jpg",123));
-//        NoteAdapter adapter = new NoteAdapter(getActivity(),mList);
-//        List<TravelNotesModel> lists = new ArrayList<TravelNotesModel>();
+        NoteAdapter adapter = new NoteAdapter(getActivity(),mList);
+        List<TravelNotesModel> lists = new ArrayList<TravelNotesModel>();
 //        linearLayoutManager = new LinearLayoutManager(getActivity());
 //        linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
-//        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 //        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
 //        adapter.refreshList(lists);
 
@@ -123,4 +132,8 @@ public class TravelNotesFragment extends Fragment {
 //            startActivity(intent);
 //        }
 //    };
+
+    private void initTopBar() {
+        mTopBar.setTitle("热门游记");
+    }
 }

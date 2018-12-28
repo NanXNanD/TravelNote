@@ -1,5 +1,6 @@
 package com.nxnd.travelnote.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.amap.api.services.core.LatLonPoint;
 import com.nxnd.travelnote.R;
+import com.nxnd.travelnote.helper.DBHelper;
+import com.nxnd.travelnote.model.StepModel;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
@@ -43,8 +46,22 @@ public class StepActivity extends AppCompatActivity {
     ImageView imageView;
     @BindView(R.id.add_image)
     ImageButton addImage;
+
+    //数据
+    //日期
     private String date = "";
+    //图片URI
     private List<Uri> mSelected;
+    //图片网络URL
+    private String imgUrl;
+    //内容
+    private String content;
+    //位置
+    private String location;
+    //经纬度
+    private Double longitude;
+    private Double latitude;
+
     public static final int REQUEST_CODE_CHOOSE=123;
     public static final int REQUEST_CODE_LOCATION=234;
     private QMUICommonListItemView itemLocation;
@@ -57,7 +74,6 @@ public class StepActivity extends AppCompatActivity {
         initTopBar();
         initTime();
         itemLocation = listView.createItemView("所在位置");
-        itemLocation.setDetailText("北京");
         itemLocation.setImageDrawable(getResources().getDrawable(R.drawable.ic_location));
         itemLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,8 +114,15 @@ public class StepActivity extends AppCompatActivity {
         //保存
         mTopBar.addRightTextButton(R.string.step_save,R.integer.save).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-//                Intent intent = new Intent(getContext(),RegisterActivity.class);
-//                startActivity(intent);
+                //TODO 保存数据
+                DBHelper.getInstance().addStep(new StepModel(1,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545927695808&di=a02179dea2b45a27daaa759828317102&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110721%2F2637379_152547508127_2.jpg"
+                ,"今天我去了长城，很开心","2018/12/27","北京",112,111));
+                //返回
+                //传递地址信息
+                Intent i=new Intent();
+                //返回数据
+                setResult(Activity.RESULT_OK,i);
+                finish();
             }
         });
     }
@@ -143,7 +166,12 @@ public class StepActivity extends AppCompatActivity {
                     String value = bundle.getString("value");
                     String title = bundle.getString("title");
                     String adname = bundle.getString("adname");
-                    itemLocation.setDetailText(title);
+                    //存经纬度
+                    this.latitude = latlonpoint.getLatitude();
+                    this.longitude = latlonpoint.getLongitude();
+                    //存位置
+                    this.location = cityname+","+title;
+                    itemLocation.setDetailText(cityname+","+title);
                     Log.d("backFromLocation", cityname+snippet);
                 }
                 break;

@@ -20,7 +20,7 @@
             android:id="@+id/login_title"
             android:text="登录"
             android:textColor="@color/qmui_config_color_75_pure_black"
-            android:textSize="46dp"/>
+            android:textSize="40dp"/>
         <TextView
             android:layout_width="120dp"
             android:layout_marginTop="10dp"

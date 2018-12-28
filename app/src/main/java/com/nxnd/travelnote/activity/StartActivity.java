@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -18,6 +19,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 import com.nxnd.travelnote.R;
+import com.nxnd.travelnote.helper.DBHelper;
+
+import org.xutils.DbManager;
 
 import permison.PermissonUtil;
 import permison.listener.PermissionListener;
@@ -49,6 +53,10 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         //获取权限
         getPermissions();
+        //设置Sqlite路径
+//        String strPath = getFilesDir().getAbsolutePath() + "/"; // 正式数据库存储地址
+        String strPath = Environment.getExternalStorageDirectory() + "/lxrj/";     // 测试数据库存储地址
+        DBHelper.getInstance().setDbDir(strPath);
 
     }
 
@@ -56,29 +64,6 @@ public class StartActivity extends AppCompatActivity {
      * 获取权限 by huchuan
      */
     private void getPermissions(){
-//        lm = (LocationManager) StartActivity.this.getSystemService(StartActivity.this.LOCATION_SERVICE);
-//        boolean ok = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-//        if (ok) {//开了定位服务
-//            if (ContextCompat.checkSelfPermission(StartActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-//                    != PackageManager.PERMISSION_GRANTED) {
-//                Log.e("BRG","没有权限");
-//                // 没有权限，申请权限。
-//                // 申请授权。
-//                ActivityCompat.requestPermissions(StartActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_CODE);
-////                        Toast.makeText(getActivity(), "没有权限", Toast.LENGTH_SHORT).show();
-//
-//            } else {
-//
-//                // 有权限了，去放肆吧。
-////                        Toast.makeText(getActivity(), "有权限", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Log.e("BRG","系统检测到未开启GPS定位服务");
-//            Toast.makeText(StartActivity.this, "系统检测到未开启GPS定位服务", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent();
-//            intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//            startActivityForResult(intent, 1315);
-//        }
         PermissonUtil.checkPermission(StartActivity.this, new PermissionListener() {
             @Override
             public void havePermission() {
@@ -92,25 +77,6 @@ public class StartActivity extends AppCompatActivity {
             }
         }, permissions);
     }
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        Log.d("permissions",permissions[0]);
-//        switch (requestCode) {
-//            case LOCATION_CODE: {
-//
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // 权限被用户同意。
-//                    checkLoginState();
-//                } else {
-//                    // 权限被用户拒绝了。
-//                    Toast.makeText(StartActivity.this, "定位权限被禁止，相关地图功能无法使用！",Toast.LENGTH_LONG).show();
-//                    checkLoginState();
-//                }
-//
-//            }
-//        }
-//    }
 
     /**
      * 判断登录状态并跳转

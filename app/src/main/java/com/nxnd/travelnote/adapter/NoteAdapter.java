@@ -1,7 +1,6 @@
 package com.nxnd.travelnote.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,12 +50,11 @@ public class NoteAdapter extends ArrayAdapter<TravelNotesModel> {
         TextView username = (TextView) view.findViewById(R.id.tv_user_name);
         time.setText(item.getStartDate());
         countday.setText("12");
-        countview.setText(item.getViewNum());
+        countview.setText(item.getViewNum()+"");
         address.setText(item.getLocation());
         username.setText(item.getUserName());
         Glide.with(context)
-                .load(item.getUserImage())
-                .asBitmap()
+                .load(item.getUserImage()).asBitmap()
                 .into((ImageView)view.findViewById(R.id.img_avator));
 
         return view;
