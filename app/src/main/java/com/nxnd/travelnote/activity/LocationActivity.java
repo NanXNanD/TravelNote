@@ -54,7 +54,7 @@ import com.nxnd.travelnote.custom.SegmentedGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationActivity extends AppCompatActivity implements LocationSource,
+public class  LocationActivity extends AppCompatActivity implements LocationSource,
         AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, PoiSearch.OnPoiSearchListener { // Inputtips.InputtipsListener
 
 

@@ -1,11 +1,16 @@
 package com.nxnd.travelnote.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +22,7 @@ import android.widget.Toast;
 
 import com.amap.api.services.core.LatLonPoint;
 import com.nxnd.travelnote.R;
+import com.nxnd.travelnote.Url;
 import com.nxnd.travelnote.helper.DBHelper;
 import com.nxnd.travelnote.model.StepModel;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
@@ -27,7 +33,11 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +45,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.common.util.KeyValue;
+import org.xutils.http.RequestParams;
+import org.xutils.http.HttpMethod;
+import org.xutils.http.body.MultipartBody;
+import org.xutils.x;
+
+import static com.nxnd.travelnote.util.ImageLoader.getFileByUri;
 
 public class StepActivity extends AppCompatActivity {
 
@@ -52,6 +73,7 @@ public class StepActivity extends AppCompatActivity {
     private String date = "";
     //图片URI
     private List<Uri> mSelected;
+    private Uri imageUri;
     //图片网络URL
     private String imgUrl;
     //内容
@@ -119,6 +141,8 @@ public class StepActivity extends AppCompatActivity {
                 ,"今天我去了长城，很开心","2018/12/27","北京",112,111));
                 //返回
                 //传递地址信息
+                uploadImage();
+                //上传图片
                 Intent i=new Intent();
                 //返回数据
                 setResult(Activity.RESULT_OK,i);
@@ -153,6 +177,9 @@ public class StepActivity extends AppCompatActivity {
                     mSelected = Matisse.obtainResult(data);
                     Log.d("Matisse", "mSelected: " + mSelected);
                     imageView.setImageURI(mSelected.get(0));
+
+                    imageUri = mSelected.get(0);
+
                     imageView.setVisibility(View.VISIBLE);
                     addImage.setVisibility(View.INVISIBLE);
                 }
@@ -178,5 +205,48 @@ public class StepActivity extends AppCompatActivity {
         }
 
     }
+    public void uploadImage(){
+        String url = Url.url_image;
+        File file = getFileByUri(imageUri,StepActivity.this);   //图片地址
+        Log.d("fileinfo",file.getPath().toString());
+        Log.d("filesize",file.getName());
+
+        RequestParams params =new RequestParams(url);
+        params.setMultipart(true);
+        params.setAsJsonContent(true);
+
+        params.addBodyParameter("image", file);  //file是手机里的图片文件
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject res = new JSONObject(result);
+                    boolean status = res.getBoolean("success");
+                    String info = res.getString("desc");
+                    if (status){
+                        imgUrl = res.getString("data");
+                    }else {
+                        Toast.makeText(StepActivity.this,info,Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    Log.d("imgerr",e.toString());
+                    Toast.makeText(StepActivity.this,"图片上传失败",Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.d("imgerr",ex.toString());
+                Toast.makeText(StepActivity.this,"上传失败",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
+            @Override
+            public void onFinished() {
+            }
+        });
+    }
+
 
 }

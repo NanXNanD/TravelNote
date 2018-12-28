@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by linSir on 17/3/11.详情界面
+
  */
 public class TravelNotesActivity extends AppCompatActivity {
 

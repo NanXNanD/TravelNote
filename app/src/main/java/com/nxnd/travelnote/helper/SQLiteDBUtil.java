@@ -24,12 +24,12 @@ public class SQLiteDBUtil extends SQLiteOpenHelper {
         String userSQL = "create table step" +
                 "(id integer primary key autoincrement," +
                 "imageurl varchar(32)," +
-                "index integer" +
-                "content varchar(500)" +
-                "datetime varchar(32)" +
-                "location varchar(32)" +
-                "longitude decimal(5,2)" +
-                "latitude decimal(5,2))";
+                "index integer," +
+                "content varchar(500)," +
+                "datetime varchar(32)," +
+                "location varchar(32)," +
+                "longitude decimal(5,2)," +
+                "latitude decimal(5,2),)";
         db.execSQL(userSQL);
     }
 
