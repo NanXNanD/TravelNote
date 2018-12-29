@@ -4,22 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
+import com.nxnd.travelnote.activity.NoteDetailActivity;
 import com.nxnd.travelnote.activity.StepActivity;
 import com.nxnd.travelnote.activity.TravelNotesActivity;
 //import com.nxnd.travelnote.adapter.TravelNotesAdapter;
 //import com.nxnd.travelnote.listener.RecyclerItemClickListener;
 import com.nxnd.travelnote.adapter.NoteAdapter;
+import com.nxnd.travelnote.model.StepModel;
 import com.nxnd.travelnote.model.TravelNotesModel;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -27,6 +32,10 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +48,14 @@ import butterknife.ButterKnife;
  */
 public class TravelNotesFragment extends Fragment {
 
-    private ListView listView;
+
     private LinearLayoutManager linearLayoutManager;
-    private List<TravelNotesModel> mList;
+    private List<TravelNotesModel> notes;
+    private NoteAdapter adapter;
     @BindView(R.id.me_topbar)
     QMUITopBar mTopBar;
+    @BindView(R.id.notes_list)
+    RecyclerView notesList;
 
     @Nullable
     @Override
@@ -51,89 +63,100 @@ public class TravelNotesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_travel_notes, container, false);
         ButterKnife.bind(this,view);
         initTopBar();
-        listView = (ListView) view.findViewById(R.id.listview);
-        //TODO 测试用
-        mList = new ArrayList<TravelNotesModel>();
-        mList.add(new TravelNotesModel("123","345","测试标题","https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=85690711,3884201894&fm=26&gp=0.jpg","2018-11-22","中国 北京市","川大宝","https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542865972201&di=74aa9bd230408814fcb346dbe7ef5e37&imgtype=0&src=http%3A%2F%2Fwww.jituwang.com%2Fuploads%2Fallimg%2F151003%2F258203-1510030RP894.jpg",123));
-        NoteAdapter adapter = new NoteAdapter(getActivity(),mList);
-        List<TravelNotesModel> lists = new ArrayList<TravelNotesModel>();
-//        linearLayoutManager = new LinearLayoutManager(getActivity());
-//        linearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
-        listView.setAdapter(adapter);
-//        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
-//        adapter.refreshList(lists);
-
-
-//        String url = Url.url + "get_all_travel_notes";
-//        OkHttpUtils
-//                .get()
-//                .url(url)
-//                .addParams("null", "null")
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Request request, Exception e) {
-//                        Toast.makeText(getActivity(), "获取游记失败", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                        List<TravelNotesModel> list = new ArrayList<TravelNotesModel>();
-//
-//                        try {
-//                            JSONArray jsonArray = new JSONArray(response);
-//                            for (int i = 0; i < jsonArray.length(); i++) {
-//
-//                                TravelNotesModel travelNotesModel = new TravelNotesModel(
-//                                        jsonArray.getJSONObject(i).optString("title"),
-//                                        jsonArray.getJSONObject(i).optString("date"),
-//                                        jsonArray.getJSONObject(i).optString("background"),
-//                                        jsonArray.getJSONObject(i).optString("text1"),
-//                                        jsonArray.getJSONObject(i).optString("img1"),
-//                                        jsonArray.getJSONObject(i).optString("text2")
-//                                );
-//
-//                                list.add(travelNotesModel);
-//
-//                            }
-//
-//                            adapter.refreshList(list);
-//                            mList = list;
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                    }
-//                });
-//
-//
+        initData();
         return view;
     }
 
 
-//    private RecyclerItemClickListener.OnItemClickListener onItemClickListener = new RecyclerItemClickListener.OnItemClickListener() {
-//        @Override
-//        public void onItemClick(View view, int position) {
-//
-//            if (position == mList.size()){
-//                return;
-//            }
-//
-//            Intent intent = new Intent(getActivity(), TravelNotesActivity.class);
-//            intent.putExtra("title", mList.get(position).getTitle());
-//            intent.putExtra("date",mList.get(position).getDate());
-//            intent.putExtra("background",mList.get(position).getBackground());
-//            intent.putExtra("text1",mList.get(position).getText1());
-//            intent.putExtra("img1",mList.get(position).getImg1());
-//            intent.putExtra("text2",mList.get(position).getText2());
-//
-//            startActivity(intent);
-//        }
-//    };
-
     private void initTopBar() {
         mTopBar.setTitle("热门游记");
+    }
+
+    private void initData(){
+        notes = new ArrayList<TravelNotesModel>();
+        //设置布局管理器
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        notesList.setLayoutManager(linearLayoutManager);
+        //设置adapter
+        adapter = new NoteAdapter(notes,getContext());
+        //设置点击监听
+        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("itemIndex",i+"");
+                TravelNotesModel model = adapter.getItemByIndex(i);
+                Intent intent =new Intent(getActivity(), NoteDetailActivity.class);
+                intent.putExtra("noteId",model.getNoteId());
+                intent.putExtra("userId",model.getUserId());
+                intent.putExtra("title",model.getTitle());
+                intent.putExtra("coverUrl",model.getCoverUrl());
+                intent.putExtra("startDate",model.getStartDate());
+                intent.putExtra("location",model.getLocation());
+                intent.putExtra("username",model.getUserName());
+                intent.putExtra("userImage",model.getUserImage());
+                intent.putExtra("viewNum",model.getViewNum());
+                startActivity(intent);
+            }
+        });
+        notesList.setAdapter(adapter);
+        //设置动画
+        notesList.setItemAnimator(new DefaultItemAnimator());
+        RequestParams params = new RequestParams(Url.url_get_note);
+        params.addParameter("page",1);
+        params.addParameter("number",10);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject res = new JSONObject(result);
+                    boolean status = res.getBoolean("success");
+                    String info = res.getString("desce");//TODO 改回来
+                    if (status){
+                        JSONArray data = res.getJSONArray("data");
+                        //遍历
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject note = data.getJSONObject(i);
+                            TravelNotesModel travelNotesModel = new TravelNotesModel(
+                                    note.getString("noteId"),
+                                    note.getString("userId"),
+                                    note.getString("title"),
+                                    note.getString("coverUrl"),
+                                    note.getString("startDate"),
+                                    note.getString("location"),
+                                    note.getString("username"),
+                                    note.optString("userImage"),
+                                    note.getInt("viewNum")
+                            );
+                            adapter.addItem(adapter.getItemCount(),travelNotesModel);
+                        }
+
+
+                    }else {
+                        Toast.makeText(getContext(),info,Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    Log.d("jsonErr",e.toString());
+                    Toast.makeText(getContext(),"获取日记失败",Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 }

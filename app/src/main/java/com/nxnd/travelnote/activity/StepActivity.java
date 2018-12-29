@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.nxnd.travelnote.Url;
 import com.nxnd.travelnote.helper.DBHelper;
 import com.nxnd.travelnote.model.StepModel;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
@@ -67,6 +69,8 @@ public class StepActivity extends AppCompatActivity {
     ImageView imageView;
     @BindView(R.id.add_image)
     ImageButton addImage;
+    @BindView(R.id.editText)
+    EditText contentEdit;
 
     //数据
     //日期
@@ -93,6 +97,9 @@ public class StepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
         ButterKnife.bind(this);
+        // 沉浸式状态栏
+        QMUIStatusBarHelper.translucent(this);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         initTopBar();
         initTime();
         itemLocation = listView.createItemView("所在位置");
@@ -136,17 +143,66 @@ public class StepActivity extends AppCompatActivity {
         //保存
         mTopBar.addRightTextButton(R.string.step_save,R.integer.save).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                //TODO 保存数据
-                DBHelper.getInstance().addStep(new StepModel(1,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545927695808&di=a02179dea2b45a27daaa759828317102&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110721%2F2637379_152547508127_2.jpg"
-                ,"今天我去了长城，很开心","2018/12/27","北京",112,111));
-                //返回
-                //传递地址信息
-                uploadImage();
-                //上传图片
-                Intent i=new Intent();
-                //返回数据
-                setResult(Activity.RESULT_OK,i);
-                finish();
+                //存content
+                content = contentEdit.getText().toString();
+                //判断
+                if(content==null||content.equals("")||location==null||location.equals("")||imageUri==null){
+                    Toast.makeText(StepActivity.this,"请输入完整信息",Toast.LENGTH_LONG).show();
+                }else {
+
+
+                    File file = getFileByUri(imageUri, StepActivity.this);   //图片地址
+                    RequestParams params = new RequestParams(Url.url_image);
+                    params.setMultipart(true);
+                    params.setAsJsonContent(true);
+                    params.addBodyParameter("image", file);  //file是手机里的图片文件
+                    x.http().post(params, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            try {
+                                JSONObject res = new JSONObject(result);
+                                boolean status = res.getBoolean("success");
+                                String info = res.getString("desc");
+                                if (status) {
+                                    //上传成功
+                                    JSONObject data = res.getJSONObject("data");
+                                    imgUrl = data.getString("url");
+                                    //TODO 保存数据
+                                    DBHelper.getInstance().addStep(new StepModel(1,imgUrl,content,date,location,longitude.floatValue(),latitude.floatValue()));
+                                    Toast.makeText(StepActivity.this, "保存成功", Toast.LENGTH_LONG).show();
+                                    //返回
+                                    Intent i=new Intent();
+                                    //返回数据
+                                    setResult(Activity.RESULT_OK,i);
+                                    finish();
+                                } else {
+                                    Toast.makeText(StepActivity.this, info, Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                Log.d("imgerr", e.toString());
+                                Toast.makeText(StepActivity.this, "图片上传失败", Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+                            Log.d("imgerr", ex.toString());
+                            Toast.makeText(StepActivity.this, "上传失败", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onCancelled(CancelledException cex) {
+                        }
+
+                        @Override
+                        public void onFinished() {
+                        }
+
+                    });
+                }
+
+
             }
         });
     }

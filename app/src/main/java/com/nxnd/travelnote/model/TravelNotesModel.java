@@ -117,4 +117,20 @@ public class TravelNotesModel {
     public void setViewNum(int viewNum) {
         this.viewNum = viewNum;
     }
+
+    public String getNoteId() {
+        return noteId;
+    }
+
+    public void setNoteId(String noteId) {
+        this.noteId = noteId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIRadiusImageView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/photo"
-    app:qmui_corner_radius="6dp"
+    android:id="@+id/note_photo"
     style="@style/CardPhoto">
 
 </com.qmuiteam.qmui.widget.QMUIRadiusImageView>

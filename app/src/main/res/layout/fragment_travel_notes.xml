@@ -12,11 +12,11 @@
         app:qmui_topbar_bg_color="@color/white"
         android:layout_height="?attr/qmui_topbar_height" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listview"
-        ></ListView>
+        android:id="@+id/notes_list"
+        ></android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

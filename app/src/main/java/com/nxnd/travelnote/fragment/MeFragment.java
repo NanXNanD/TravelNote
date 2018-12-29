@@ -75,7 +75,6 @@ public class MeFragment extends Fragment {
         itemAbout.setImageDrawable(getResources().getDrawable(R.drawable.ic_about));
         QMUICommonListItemView itemQuit = listView.createItemView("退出登录");
         itemQuit.setImageDrawable(getResources().getDrawable(R.drawable.ic_left_down2));
-
         QMUIGroupListView.newSection(getContext())
                 .setTitle("")
                 .addItemView(itemPhone,null)

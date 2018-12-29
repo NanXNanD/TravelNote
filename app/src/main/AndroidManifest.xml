@@ -68,7 +68,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="37e81dcd2ff3c0f66a5c7fef4574b2ae" />
 
-        <activity android:name=".activity.EditActivity"></activity>
+        <activity android:name=".activity.EditActivity" />
+        <activity android:name=".activity.NoteDetailActivity"></activity>
     </application>
 
 </manifest>

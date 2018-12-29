@@ -91,4 +91,20 @@ public class DBHelper {
         }
 
     }
+
+    //修改指定步骤
+
+    //删除指定步骤
+
+    //删除所有
+    public boolean delAllSteps(){
+        try{
+            DbManager db = x.getDb(m_daoConfig);
+            db.delete(StepModel.class);
+            return true;
+        } catch(Throwable e){
+            if (BuildConfig.DEBUG) Log.d("DBHelper", "error :" + e.getMessage());
+            return false;
+        }
+    }
 }

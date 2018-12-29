@@ -39,17 +39,6 @@
                     style="@style/DetailStyle"/>
 
                 <TextView
-                    android:id="@+id/tv_count_day"
-                    style="@style/DetailStyle"
-                    android:layout_marginLeft="6dp"/>
-
-                <TextView
-                    style="@style/DetailStyle"
-                    android:text="天"
-                    android:layout_marginLeft="6dp"
-                    />
-
-                <TextView
                     android:id="@+id/tv_count_view"
                     style="@style/DetailStyle"
                     android:layout_marginLeft="6dp"/>
@@ -61,6 +50,9 @@
                     />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></LinearLayout>
             <TextView
                 android:id="@+id/tv_address"
                 style="@style/DetailStyle"
@@ -70,7 +62,17 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="旅行日记"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/white"
+        android:id="@+id/tv_title"/>
     <ImageView
         android:id="@+id/img_avator"
         android:layout_width="30dp"

@@ -1,10 +1,12 @@
 package com.nxnd.travelnote.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,67 +14,121 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.model.TravelNotesModel;
+import com.nxnd.travelnote.util.CommonUtil;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 
+import org.xutils.image.ImageOptions;
+import org.xutils.x;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by huchuan
  */
 
-public class NoteAdapter extends ArrayAdapter<TravelNotesModel> {
-    /**
-     * Constructor
-     *
-     * @param context  listView所在的上下文，也就是ListView所在的Activity
-     * @param datas  Cell上要显示的数据list，也就是实体类集合
-     */
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
+
+    private List<TravelNotesModel> mItems;
+    private AdapterView.OnItemClickListener mOnItemClickListener;
     private Context context;
-    public NoteAdapter(Context context, List<TravelNotesModel> datas) {
-        super(context, R.layout.note_list_item, datas);
+
+    public NoteAdapter(List<TravelNotesModel> mItems,Context context) {
+        this.mItems = mItems;
         this.context = context;
     }
 
-    @Override
-    /**
-     * @param position 当前设置的Cell行数，类似于iOS开发中的indexPath.row
-     */
-    public View getView(int position, View convertView, ViewGroup parent) {
-        TravelNotesModel item = getItem(position);
-        Log.d("note item info", "getView: "+item.getTitle()+item.getCoverUrl());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.note_list_item, null);
-        Glide.with(context)
-                .load(item.getCoverUrl()).asBitmap()
-                .into((ImageView)view.findViewById(R.id.photo));
-        TextView time = (TextView) view.findViewById(R.id.tv_time);
-        TextView countday = (TextView) view.findViewById(R.id.tv_count_day);
-        TextView countview = (TextView) view.findViewById(R.id.tv_count_view);
-        TextView address = (TextView) view.findViewById(R.id.tv_address);
-        TextView username = (TextView) view.findViewById(R.id.tv_user_name);
-        time.setText(item.getStartDate());
-        countday.setText("12");
-        countview.setText(item.getViewNum()+"");
-        address.setText(item.getLocation());
-        username.setText(item.getUserName());
-        Glide.with(context)
-                .load(item.getUserImage()).asBitmap()
-                .into((ImageView)view.findViewById(R.id.img_avator));
 
-        return view;
+    public void addItem(int position,TravelNotesModel travelNotesModel) {
+        if (position > mItems.size()) return;
+
+        mItems.add(position, travelNotesModel);
+        notifyItemInserted(position);
     }
 
-//    @Override
-//    protected void convert(BaseViewHolder viewHoder, DetailBean item) {
-//        Glide.with(viewHoder.itemView.getContext())
-//                .load(item.getCover_image()).asBitmap()
-//        .into((RoundedImageView)viewHoder.getView(R.id.photo));
-//        viewHoder.getTextView(R.id.tv_time).setText(item.getFirst_day());
-//        viewHoder.getTextView(R.id.tv_count_day).setText(item.getDay_count()+"");
-//        viewHoder.getTextView(R.id.tv_count_view).setText(item.getView_count()+"");
-//        viewHoder.getTextView(R.id.tv_address).setText(item.getPopular_place_str());
-//        viewHoder.getTextView(R.id.tv_user_name).setText(item.getUser().getName());
-//        Glide.with(viewHoder.itemView.getContext())
-//                .load(item.getUser().getAvatar_s())
-//                .asBitmap().transform(new GlideCircleTransform(viewHoder.itemView.getContext()))
-//                .into(viewHoder.getImageView(R.id.img_avator));
+//    public void removeItem(int position) {
+//        if (position >= mItems.size()) return;
+//
+//        mItems.remove(position);
+//        notifyItemRemoved(position);
 //    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View root = inflater.inflate(R.layout.note_list_item, viewGroup, false);
+        return new ViewHolder(root, this);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        TravelNotesModel travelNotesModel = mItems.get(i);
+        viewHolder.setData(travelNotesModel);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    public TravelNotesModel getItemByIndex(int i){
+        return mItems.get(i);
+    }
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
+    private void onItemHolderClick(RecyclerView.ViewHolder itemHolder) {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(null, itemHolder.itemView,
+                    itemHolder.getAdapterPosition(), itemHolder.getItemId());
+        }
+    }
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private QMUIRadiusImageView img ;
+        private TextView time ;
+        private TextView countview;
+        private TextView address ;
+        private TextView title;
+        private TextView username ;
+        private ImageView avator;
+        private NoteAdapter mAdapter;
+
+        public ViewHolder(View view, NoteAdapter adapter) {
+            super(view);
+            itemView.setOnClickListener(this);
+            mAdapter = adapter;
+
+            img = view.findViewById(R.id.note_photo);
+            time = (TextView) view.findViewById(R.id.tv_time);
+            countview = (TextView) view.findViewById(R.id.tv_count_view);
+            address = (TextView) view.findViewById(R.id.tv_address);
+            title = (TextView) view.findViewById(R.id.tv_title);
+            avator = (ImageView) view.findViewById(R.id.img_avator);
+            username = (TextView) view.findViewById(R.id.tv_user_name);
+        }
+
+        public void setData(TravelNotesModel model) {
+            time.setText(model.getStartDate());//TODO 时间转换
+            countview.setText(model.getViewNum()+"");
+            address.setText(model.getLocation());
+            username.setText(model.getUserName());
+            title.setText(model.getTitle());
+            Glide.with(mAdapter.context)
+                    .load(CommonUtil.getImageUrl(model.getCoverUrl())).asBitmap()
+                    .into(img);
+            x.image().bind(avator, CommonUtil.getImageUrl(model.getUserImage()),CommonUtil.options);
+
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            mAdapter.onItemHolderClick(this);
+        }
+    }
 }
