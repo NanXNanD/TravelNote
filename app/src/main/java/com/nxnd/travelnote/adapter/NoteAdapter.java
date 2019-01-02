@@ -53,6 +53,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 //        notifyItemRemoved(position);
 //    }
 
+    public void removeAll(){
+        int s = mItems.size();
+        mItems.clear();
+        notifyItemRangeRemoved(0,s);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());

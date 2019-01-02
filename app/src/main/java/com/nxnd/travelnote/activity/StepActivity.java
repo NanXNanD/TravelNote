@@ -26,9 +26,11 @@ import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
 import com.nxnd.travelnote.helper.DBHelper;
 import com.nxnd.travelnote.model.StepModel;
+import com.nxnd.travelnote.util.CommonUtil;
 import com.qmuiteam.qmui.alpha.QMUIAlphaImageButton;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import com.zhihu.matisse.Matisse;
@@ -91,6 +93,7 @@ public class StepActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_CHOOSE=123;
     public static final int REQUEST_CODE_LOCATION=234;
     private QMUICommonListItemView itemLocation;
+    private QMUITipDialog tipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,9 +128,7 @@ public class StepActivity extends AppCompatActivity {
 
 
     private void initTime(){
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
-        date = format.format(calendar.getTime());
+        date = CommonUtil.getCurrTime();
     }
 
     private void initTopBar() {
@@ -143,11 +144,17 @@ public class StepActivity extends AppCompatActivity {
         //保存
         mTopBar.addRightTextButton(R.string.step_save,R.integer.save).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
+                tipDialog = new QMUITipDialog.Builder(StepActivity.this)
+                            .setTipWord("保存中")
+                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                            .create();
+                tipDialog.show();
                 //存content
                 content = contentEdit.getText().toString();
                 //判断
                 if(content==null||content.equals("")||location==null||location.equals("")||imageUri==null){
                     Toast.makeText(StepActivity.this,"请输入完整信息",Toast.LENGTH_LONG).show();
+                    tipDialog.dismiss();
                 }else {
 
 
@@ -169,6 +176,7 @@ public class StepActivity extends AppCompatActivity {
                                     imgUrl = data.getString("url");
                                     //TODO 保存数据
                                     DBHelper.getInstance().addStep(new StepModel(1,imgUrl,content,date,location,longitude.floatValue(),latitude.floatValue()));
+                                    tipDialog.dismiss();
                                     Toast.makeText(StepActivity.this, "保存成功", Toast.LENGTH_LONG).show();
                                     //返回
                                     Intent i=new Intent();
@@ -176,10 +184,12 @@ public class StepActivity extends AppCompatActivity {
                                     setResult(Activity.RESULT_OK,i);
                                     finish();
                                 } else {
+                                    tipDialog.dismiss();
                                     Toast.makeText(StepActivity.this, info, Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 Log.d("imgerr", e.toString());
+                                tipDialog.dismiss();
                                 Toast.makeText(StepActivity.this, "图片上传失败", Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
                             }
@@ -189,6 +199,7 @@ public class StepActivity extends AppCompatActivity {
                         public void onError(Throwable ex, boolean isOnCallback) {
                             Log.d("imgerr", ex.toString());
                             Toast.makeText(StepActivity.this, "上传失败", Toast.LENGTH_LONG).show();
+                            tipDialog.dismiss();
                         }
 
                         @Override
@@ -261,48 +272,7 @@ public class StepActivity extends AppCompatActivity {
         }
 
     }
-    public void uploadImage(){
-        String url = Url.url_image;
-        File file = getFileByUri(imageUri,StepActivity.this);   //图片地址
-        Log.d("fileinfo",file.getPath().toString());
-        Log.d("filesize",file.getName());
 
-        RequestParams params =new RequestParams(url);
-        params.setMultipart(true);
-        params.setAsJsonContent(true);
-
-        params.addBodyParameter("image", file);  //file是手机里的图片文件
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                try {
-                    JSONObject res = new JSONObject(result);
-                    boolean status = res.getBoolean("success");
-                    String info = res.getString("desc");
-                    if (status){
-                        imgUrl = res.getString("data");
-                    }else {
-                        Toast.makeText(StepActivity.this,info,Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    Log.d("imgerr",e.toString());
-                    Toast.makeText(StepActivity.this,"图片上传失败",Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.d("imgerr",ex.toString());
-                Toast.makeText(StepActivity.this,"上传失败",Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void onCancelled(CancelledException cex) {
-            }
-            @Override
-            public void onFinished() {
-            }
-        });
-    }
 
 
 }

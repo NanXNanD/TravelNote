@@ -12,9 +12,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nxnd.travelnote.service.UserService;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.nxnd.travelnote.R;
 import com.nxnd.travelnote.Url;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.login_password) EditText userPwd;
     @BindView(R.id.login_login) Button login;
 
+    private QMUITipDialog tipDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginPost(String phoneNum,String password){
+        tipDialog = new QMUITipDialog.Builder(LoginActivity.this)
+                .setTipWord("登录中")
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .create();
+        tipDialog.show();
         //登录
         String url = Url.url_login;
         RequestParams params = new RequestParams(url);
@@ -81,22 +89,18 @@ public class LoginActivity extends AppCompatActivity {
                     if (status){
                         Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
                         //存入用户信息
-                        SharedPreferences sharedPreferences = getSharedPreferences("user", Activity.MODE_PRIVATE);
-                        //实例化SharedPreferences.Editor对象
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        //用putString的方法保存数据
-                        editor.putString("phoneNum", userName.getText().toString());
-                        editor.putString("password", userPwd.getText().toString());
-                        //TODO 用户信息
-                        //提交当前数据
-                        editor.apply();
+                        JSONObject data = res.getJSONObject("data");
+                        UserService.saveUserInfo(LoginActivity.this,userName.getText().toString(),userPwd.getText().toString(),data.getString("username"),data.getString("userImg"));
+                        tipDialog.dismiss();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }else {
+                        tipDialog.dismiss();
                         Toast.makeText(LoginActivity.this,info,Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
+                    tipDialog.dismiss();
                     Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
@@ -104,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.d("loginerr",ex.toString());
+                tipDialog.dismiss();
                 Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
             }
             @Override

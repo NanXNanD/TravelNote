@@ -39,6 +39,7 @@ import static com.nxnd.travelnote.activity.StepActivity.REQUEST_CODE_LOCATION;
  */
 public class EditFragment extends Fragment {
 
+    private static final int REQUEST_CODE_EDIT = 866;
     @BindView(R.id.mynote_topbar)
     QMUITopBar mTopBar;
 
@@ -59,6 +60,7 @@ public class EditFragment extends Fragment {
         this.refresh();
         return view;
     }
+
 
     @OnClick(R.id.newnote)
     public void onClickNewNote() {
@@ -94,8 +96,7 @@ public class EditFragment extends Fragment {
         //进入编辑
         Intent i=new Intent(getActivity(),EditActivity.class);
         startActivity(i);
-//                        startActivityForResult(i, REQUEST_CODE_LOCATION);//打开定位页面
-
+        startActivityForResult(i, REQUEST_CODE_EDIT);//打开编辑页面
     }
 
     //刷新页面
@@ -112,4 +113,12 @@ public class EditFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_EDIT:
+                refresh();
+                break;
+        }
+    }
 }

@@ -5,6 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.nxnd.travelnote.Url;
+import com.nxnd.travelnote.activity.StepActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.io.File;
 
@@ -55,5 +66,17 @@ public class ImageLoader {
 //Log.i(TAG, "Uri Scheme:" + uri.getScheme());
         }
         return null;
+    }
+
+    public static void uploadImage(Context context,Uri imageUri,Callback.CommonCallback<String> callback){
+        String url = Url.url_image;
+        File file = getFileByUri(imageUri,context);   //图片地址
+        Log.d("fileinfo",file.getPath().toString());
+        Log.d("filesize",file.getName());
+        RequestParams params =new RequestParams(url);
+        params.setMultipart(true);
+        params.setAsJsonContent(true);
+        params.addBodyParameter("image", file);  //file是手机里的图片文件
+        x.http().post(params, callback);
     }
 }

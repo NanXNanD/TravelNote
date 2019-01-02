@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/white</item>
         <!--<item name="android:textCursorDrawable">@color/qmui_config_color_pure_black</item>-->
-        <item name="colorAccent">@color/qmui_config_color_75_pure_black</item>
+        <item name="colorAccent">@color/light_blue</item>
     </style>
     <style name="DetailStyle">
         <item name="android:layout_width">wrap_content</item>
@@ -18,7 +18,7 @@
         <item name="android:layout_height">200dp</item>
         <item name="android:layout_marginBottom">16dp</item>
         <item name="cardBackgroundColor">@android:color/white</item>
-        <item name="cardCornerRadius">6dp</item>
+        <item name="cardCornerRadius">8dp</item>
         <item name="cardElevation">0dp</item>
     </style>
     <style name="Card_bg">
@@ -35,7 +35,7 @@
     <style name="CardPhoto">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:tint">@color/light_blue</item>
+        <!--<item name="android:tint">@color/light_blue</item>-->
         <item name="android:scaleType">centerCrop</item>
     </style>
 </resources>

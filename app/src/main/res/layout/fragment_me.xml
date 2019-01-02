@@ -19,22 +19,30 @@
         android:background="@color/qmui_config_color_white"
         android:orientation="horizontal">
 
-        <com.nxnd.travelnote.custom.CircleImageView
-            android:id="@+id/view"
+        <!--<com.nxnd.travelnote.custom.CircleImageView-->
+            <!--android:id="@+id/view"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_marginLeft="28dp"-->
+            <!--android:layout_marginTop="18dp"-->
+            <!--android:src="@drawable/user"-->
+            <!--/>-->
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="18dp"
             android:src="@drawable/user"
-            />
-
+            android:id="@+id/fr_me_user_img"
+            app:qmui_corner_radius="30dp"
+        />
         <TextView
             android:id="@+id/fr_me_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
-            android:text="胡川"
+            android:text=""
             android:textSize="20sp"/>
 
     </LinearLayout>

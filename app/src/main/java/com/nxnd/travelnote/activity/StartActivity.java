@@ -19,9 +19,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 import com.nxnd.travelnote.R;
+import com.nxnd.travelnote.Url;
 import com.nxnd.travelnote.helper.DBHelper;
+import com.nxnd.travelnote.service.UserService;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.DbManager;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import permison.PermissonUtil;
 import permison.listener.PermissionListener;
@@ -31,6 +39,8 @@ import permison.listener.PermissionListener;
  * Created by huchuan on 18/10/28.启动页面
  */
 public class StartActivity extends AppCompatActivity {
+
+    private QMUITipDialog tipDialog;
     //需要的权限列表
     String[] permissions = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -86,16 +96,54 @@ public class StartActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
-                String name = pref.getString("phoneNum", "1");
-                String password = pref.getString("password", "1");
-                if (name.equals("1")) {
+                final String phoneNum = pref.getString("phoneNum", "1");
+                final String password = pref.getString("password", "1");
+                if (phoneNum.equals("1")) {
                     Intent intent = new Intent(StartActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 } else {
-                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    //登录
+                    String url = Url.url_login;
+                    RequestParams params = new RequestParams(url);
+                    params.addParameter("phoneNum",phoneNum);
+                    params.addParameter("password",password);
+                    x.http().post(params, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            try {
+                                JSONObject res = new JSONObject(result);
+                                boolean status = res.getBoolean("success");
+                                String info = res.getString("desc");
+                                if (status){
+                                    Toast.makeText(StartActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+                                    //存入用户信息
+                                    JSONObject data = res.getJSONObject("data");
+                                    UserService.saveUserInfo(StartActivity.this,phoneNum,password,data.getString("username"),data.getString("userImg"));
+                                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else {
+                                    Toast.makeText(StartActivity.this,info,Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(StartActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+                            Log.d("loginerr",ex.toString());
+                            Toast.makeText(StartActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+                        }
+                        @Override
+                        public void onCancelled(CancelledException cex) {
+                        }
+                        @Override
+                        public void onFinished() {
+                        }
+                    });
                 }
-                finish();
             }
         }, 1000);
     }

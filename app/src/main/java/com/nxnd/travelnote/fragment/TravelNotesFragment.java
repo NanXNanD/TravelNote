@@ -27,6 +27,8 @@ import com.nxnd.travelnote.adapter.NoteAdapter;
 import com.nxnd.travelnote.model.StepModel;
 import com.nxnd.travelnote.model.TravelNotesModel;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -56,6 +58,10 @@ public class TravelNotesFragment extends Fragment {
     QMUITopBar mTopBar;
     @BindView(R.id.notes_list)
     RecyclerView notesList;
+    @BindView(R.id.pull_to_refresh)
+    QMUIPullRefreshLayout qmuiPullRefreshLayout;
+    private QMUITipDialog tipDialog;
+
 
     @Nullable
     @Override
@@ -64,6 +70,30 @@ public class TravelNotesFragment extends Fragment {
         ButterKnife.bind(this,view);
         initTopBar();
         initData();
+        qmuiPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
+            @Override
+            public void onMoveTarget(int offset) {
+
+            }
+
+            @Override
+            public void onMoveRefreshView(int offset) {
+
+            }
+
+            @Override
+            public void onRefresh() {
+                qmuiPullRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.removeAll();
+                        qmuiPullRefreshLayout.finishRefresh();
+                        getData();
+                    }
+                }, 500);
+
+            }
+        });
         return view;
     }
 
@@ -73,6 +103,7 @@ public class TravelNotesFragment extends Fragment {
     }
 
     private void initData(){
+
         notes = new ArrayList<TravelNotesModel>();
         //设置布局管理器
         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -101,9 +132,14 @@ public class TravelNotesFragment extends Fragment {
         notesList.setAdapter(adapter);
         //设置动画
         notesList.setItemAnimator(new DefaultItemAnimator());
+        getData();
+
+    }
+
+    private void getData(){
         RequestParams params = new RequestParams(Url.url_get_note);
         params.addParameter("page",1);
-        params.addParameter("number",10);
+        params.addParameter("number",50);
 
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
@@ -111,7 +147,7 @@ public class TravelNotesFragment extends Fragment {
                 try {
                     JSONObject res = new JSONObject(result);
                     boolean status = res.getBoolean("success");
-                    String info = res.getString("desce");//TODO 改回来
+                    String info = res.getString("desc");
                     if (status){
                         JSONArray data = res.getJSONArray("data");
                         //遍历
@@ -128,14 +164,14 @@ public class TravelNotesFragment extends Fragment {
                                     note.optString("userImage"),
                                     note.getInt("viewNum")
                             );
-                            adapter.addItem(adapter.getItemCount(),travelNotesModel);
+                            adapter.addItem(adapter.getItemCount(), travelNotesModel);
                         }
-
 
                     }else {
                         Toast.makeText(getContext(),info,Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
+                    tipDialog.dismiss();
                     Log.d("jsonErr",e.toString());
                     Toast.makeText(getContext(),"获取日记失败",Toast.LENGTH_LONG).show();
                     e.printStackTrace();
@@ -144,7 +180,6 @@ public class TravelNotesFragment extends Fragment {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
             }
 
             @Override
@@ -157,6 +192,5 @@ public class TravelNotesFragment extends Fragment {
 
             }
         });
-
     }
 }

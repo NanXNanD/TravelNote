@@ -57,4 +57,6 @@ public class StepAdapter extends ArrayAdapter<StepModel> {
         Log.d("xImageBind", "加载step图片: "+CommonUtil.getImageUrl(stepModel.getImageurl()));
         return view;
     }
+
+
 }

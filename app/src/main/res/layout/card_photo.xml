@@ -2,6 +2,8 @@
 <com.qmuiteam.qmui.widget.QMUIRadiusImageView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/note_photo"
+    app:qmui_border_color="@color/translate"
+    app:qmui_corner_radius="8dp"
     style="@style/CardPhoto">
 
 </com.qmuiteam.qmui.widget.QMUIRadiusImageView>
