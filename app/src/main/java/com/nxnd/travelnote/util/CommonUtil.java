@@ -1,15 +1,30 @@
 package com.nxnd.travelnote.util;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.amap.api.location.AMapLocation;
 import com.nxnd.travelnote.R;
 
+import org.json.JSONObject;
 import org.xutils.image.ImageOptions;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Locale;
+
+import static android.R.attr.radius;
 
 /**
  * Created by huchuan on 2018/12/29.
@@ -53,13 +68,4 @@ public class CommonUtil {
         String date = format.format(calendar.getTime());
         return date;
     }
-
-//    //转换时间格式
-//    public static String changeTimeFormat(String oldS){
-//        String newS;
-//
-//        return newS;
-//    }
-    //转换日期格式
-
 }

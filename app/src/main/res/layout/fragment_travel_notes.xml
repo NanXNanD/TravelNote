@@ -8,9 +8,27 @@
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/me_topbar"
         android:layout_width="match_parent"
-        app:qmui_topbar_title_color="@color/qmui_config_color_black"
+        android:layout_height="?attr/qmui_topbar_height"
         app:qmui_topbar_bg_color="@color/white"
-        android:layout_height="?attr/qmui_topbar_height" />
+        app:qmui_topbar_title_color="@color/qmui_config_color_black">
+
+        <EditText
+            android:id="@+id/text_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            android:layout_alignBaseline="@+id/text_search"
+            android:layout_alignBottom="@+id/text_search"
+            android:layout_toEndOf="@+id/text_search" />
+    </com.qmuiteam.qmui.widget.QMUITopBar>
 
     <com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout
         android:id="@+id/pull_to_refresh"

@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,6 +56,11 @@ public class TravelNotesFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private List<TravelNotesModel> notes;
     private NoteAdapter adapter;
+    private String keyword = "";
+    @BindView(R.id.search)
+    Button search;
+    @BindView(R.id.text_search)
+    EditText text_search;
     @BindView(R.id.me_topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.notes_list)
@@ -70,6 +77,13 @@ public class TravelNotesFragment extends Fragment {
         ButterKnife.bind(this,view);
         initTopBar();
         initData();
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                keyword = text_search.getText().toString();
+                initData();
+            }
+        });
         qmuiPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {
             @Override
             public void onMoveTarget(int offset) {
@@ -138,6 +152,9 @@ public class TravelNotesFragment extends Fragment {
 
     private void getData(){
         RequestParams params = new RequestParams(Url.url_get_note);
+        if(keyword!=null||!keyword.equals("")){
+            params.addParameter("title",keyword);
+        }
         params.addParameter("page",1);
         params.addParameter("number",50);
 

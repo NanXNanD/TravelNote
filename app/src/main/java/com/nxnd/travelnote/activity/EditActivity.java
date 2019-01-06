@@ -1,6 +1,5 @@
 package com.nxnd.travelnote.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -31,9 +30,7 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogMenuItemView;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;

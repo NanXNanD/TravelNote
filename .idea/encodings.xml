@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/nxnd/travelnote/activity/LocationActivity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/nxnd/travelnote/adapter/SearchResultAdapter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/nxnd/travelnote/custom/SegmentedGroup.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/nxnd/travelnote/util/Utils.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_dropdown_spinner_normal.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/button_text_color.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_affirm_selected.png" charset="GBK" />
